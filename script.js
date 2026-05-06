@@ -544,6 +544,165 @@ const REGISTROS_FIXOS = [
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Juridica (Simulacao)",
         BASE_FICTICIA_VEICULO: "",
         ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Carlão Osborn",
+        CPF_FICTICIO: "789.012.345-67",
+        RG_NUMERO: "12.345.678-9",
+        RG_ORGAO_EMISSOR: "SSP/SP",
+        DATA_NASCIMENTO: "15/05/1985",
+        NATURALIDADE: "São Paulo",
+        UF_NATURALIDADE: "SP",
+        NOME_MAE: "Sharon Costa Osborn",
+        NOME_PAI: "Ozzy Ferreira Osborn",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        GENERO: "Masculino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        ENDERECOS: [
+            "(Equipe Vermelha) Kit 03, Cidade Cenográfica/ANP",
+            "(Equipe Azul Clara) Kit 02, Cidade Cenográfica/ANP",
+            "(Equipe Verde) Kit 11, Cidade Cenográfica/ANP",
+            "(Equipe Amarela) Kit 10, Cidade Cenográfica/ANP",
+            "(Equipe Azul Escuro) Kit 13, Cidade Cenográfica/ANP"
+        ],
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Rocha Balboa",
+        CPF_FICTICIO: "012.345.678-00",
+        RG_NUMERO: "23.456.789-0",
+        RG_ORGAO_EMISSOR: "SSP/RJ",
+        DATA_NASCIMENTO: "06/12/1976",
+        NATURALIDADE: "Rio de Janeiro",
+        UF_NATURALIDADE: "RJ",
+        NOME_MAE: "Adriana Silva Balboa",
+        NOME_PAI: "Apollo Diniz Balboa",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        GENERO: "Masculino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        LOGRADOURO: "Travessa do Campeão",
+        NUMERO: "321",
+        COMPLEMENTO: "Bloco B",
+        BAIRRO: "Rocinha",
+        CIDADE: "Rio de Janeiro",
+        UF: "RJ",
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Alfred Tostão",
+        CPF_FICTICIO: "123.456.789-01",
+        RG_NUMERO: "34.567.890-1",
+        RG_ORGAO_EMISSOR: "SSP/MG",
+        DATA_NASCIMENTO: "24/07/1960",
+        NATURALIDADE: "Belo Horizonte",
+        UF_NATURALIDADE: "MG",
+        NOME_MAE: "Martha Alencar Tostão",
+        NOME_PAI: "Butler Peninha Tostão",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        GENERO: "Masculino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        LOGRADOURO: "Avenida Mineira",
+        NUMERO: "4567",
+        COMPLEMENTO: "Casa 22",
+        BAIRRO: "Savassi",
+        CIDADE: "Belo Horizonte",
+        UF: "MG",
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Harvey Dent",
+        CPF_FICTICIO: "234.567.890-12",
+        RG_NUMERO: "45.678.901-2",
+        RG_ORGAO_EMISSOR: "SSP/PR",
+        DATA_NASCIMENTO: "10/01/1992",
+        NATURALIDADE: "Curitiba",
+        UF_NATURALIDADE: "PR",
+        NOME_MAE: "Gilda Harvey Dent",
+        NOME_PAI: "Duas Caras Dent",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        GENERO: "Masculino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        LOGRADOURO: "Alameda do Promotor",
+        NUMERO: "987",
+        COMPLEMENTO: "Ed. Justiça",
+        BAIRRO: "Centro",
+        CIDADE: "Curitiba",
+        UF: "PR",
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Ozzy Ferreira Osborn",
+        CPF_FICTICIO: "356.012.345-67",
+        RG_NUMERO: "11.678.944-1",
+        RG_ORGAO_EMISSOR: "SSP/SP",
+        DATA_NASCIMENTO: "01/04/1944",
+        NATURALIDADE: "São Paulo",
+        UF_NATURALIDADE: "SP",
+        NOME_MAE: "Marilyn Monroe Osborn",
+        NOME_PAI: "Keith Richards Osborn",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        GENERO: "Masculino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        ENDERECOS: [
+            "(Equipe Vermelha) Kit 09, Cidade Cenográfica/ANP",
+            "(Equipe Azul Clara) Kit 12, Cidade Cenográfica/ANP",
+            "(Equipe Verde) Kit 06, Cidade Cenográfica/ANP",
+            "(Equipe Amarela) Kit 07, Cidade Cenográfica/ANP",
+            "(Equipe Azul Escuro) Kit 01, Cidade Cenográfica/ANP"
+        ],
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Sharon Costa Osborn",
+        CPF_FICTICIO: "778.012.345-67",
+        RG_NUMERO: "45.678.871-9",
+        RG_ORGAO_EMISSOR: "SSP/SP",
+        DATA_NASCIMENTO: "06/09/1942",
+        NATURALIDADE: "São Paulo",
+        UF_NATURALIDADE: "SP",
+        NOME_MAE: "Madonna da Silva",
+        NOME_PAI: "Jackson Five",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        GENERO: "Feminino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        ENDERECOS: [
+            "(Equipe Vermelha) Kit 09, Cidade Cenográfica/ANP",
+            "(Equipe Azul Clara) Kit 12, Cidade Cenográfica/ANP",
+            "(Equipe Verde) Kit 06, Cidade Cenográfica/ANP",
+            "(Equipe Amarela) Kit 07, Cidade Cenográfica/ANP",
+            "(Equipe Azul Escuro) Kit 01, Cidade Cenográfica/ANP"
+        ],
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
     }
 ];
 const CAMPOS_MINIMOS_BASE = [
@@ -2245,8 +2404,10 @@ function gerarSecaoDadosPessoais(pessoa) {
         <div class="detalhe-campo"><strong>UF Naturalidade:</strong> ${pessoa.UF_NATURALIDADE || "-"}</div>
         <div class="detalhe-campo"><strong>Estado Civil:</strong> ${pessoa.ESTADO_CIVIL || "-"}</div>
         <div class="detalhe-campo"><strong>Profissão:</strong> ${pessoa.PROFISSAO || "-"}</div>
-        <div class="detalhe-campo"><strong>Endereço:</strong> ${enderecoPrincipalPessoa || "-"}</div>
-        <div class="detalhe-campo"><strong>Endereço 2:</strong> ${enderecoSecundarioPessoa || "-"}</div>
+        ${Array.isArray(pessoa.ENDERECOS) && pessoa.ENDERECOS.length > 0
+            ? pessoa.ENDERECOS.map((end, i) => `<div class="detalhe-campo"><strong>Endereço ${i + 1}:</strong> ${end}</div>`).join("")
+            : `<div class="detalhe-campo"><strong>Endereço:</strong> ${enderecoPrincipalPessoa || "-"}</div>
+        <div class="detalhe-campo"><strong>Endereço 2:</strong> ${enderecoSecundarioPessoa || "-"}</div>`}
         <div class="detalhe-campo"><strong>Data da Atualização:</strong> ${dataAtualizacao}</div>
     `);
 }
