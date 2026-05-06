@@ -2020,9 +2020,9 @@ function pesquisar() {
         let documentoBuscaNumerico = normalizarCPF(obterDocumentoPesquisa(p));
         let placa1Busca = normalizarPlaca(p.VEICULO_1_PLACA);
         let placa2Busca = normalizarPlaca(p.VEICULO_2_PLACA);
-        let placasListaBusca = Array.isArray(p.VEICULOS_LISTA)
-            ? p.VEICULOS_LISTA.map(v => normalizarPlaca(v)).join(" ")
-            : "";
+        const placaNaLista = Array.isArray(p.VEICULOS_LISTA)
+            ? function(termo) { return p.VEICULOS_LISTA.some(function(v) { return normalizarPlaca(v).indexOf(termo) !== -1; }); }
+            : function() { return false; };
         let chavePixBusca = normalizar(String(p.CHAVE_PIX || ""));
         let chavePixNumerica = String(p.CHAVE_PIX || "").replace(/\D/g, "");
         let localBusca = normalizar([
@@ -2040,7 +2040,7 @@ function pesquisar() {
             (tipoBusca === "nome" && nomeContemTermo(nomePrincipalBusca, termo)) ||
             (tipoBusca === "cpf" && termoCPF.length > 0 && cpfBusca.includes(termoCPF)) ||
             (tipoBusca === "documento" && (documentoBusca.includes(termo) || (termoCPF.length > 0 && documentoBuscaNumerico.includes(termoCPF)))) ||
-            (tipoBusca === "placa" && termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placasListaBusca.includes(termoPlaca))) ||
+            (tipoBusca === "placa" && termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
             (tipoBusca === "local" && localBusca.includes(termo)) ||
             (tipoBusca === "pix" && ((chavePixBusca && chavePixBusca.includes(termo)) || (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF))));
 
@@ -2049,12 +2049,12 @@ function pesquisar() {
             encontrou =
                 buscaGeral.includes(termo) ||
                 (termoCPF.length > 0 && (cpfBusca.includes(termoCPF) || documentoBuscaNumerico.includes(termoCPF))) ||
-                (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placasListaBusca.includes(termoPlaca))) ||
+                (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
                 (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF));
         }
 
         if (!encontrou && tipoBusca === "placa" && termoPlaca.length > 0) {
-            encontrou = placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placasListaBusca.includes(termoPlaca) || buscaGeral.includes(termoPlaca);
+            encontrou = placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placaNaLista(termoPlaca) || buscaGeral.includes(termoPlaca);
         }
 
         if (tipoBusca === "nome" && termo.length < 2) {
