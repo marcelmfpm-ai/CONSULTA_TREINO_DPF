@@ -1494,7 +1494,7 @@ function extrairDocumentoNumerico(texto) {
 }
 
 function possuiVeiculos(pessoa) {
-    return Boolean(pessoa.VEICULO_1_PLACA || pessoa.VEICULO_2_PLACA);
+    return Boolean(pessoa.VEICULO_1_PLACA || pessoa.VEICULO_2_PLACA || (Array.isArray(pessoa.VEICULOS_LISTA) && pessoa.VEICULOS_LISTA.length > 0));
 }
 
 function possuiVoos(pessoa) {
@@ -2020,6 +2020,9 @@ function pesquisar() {
         let documentoBuscaNumerico = normalizarCPF(obterDocumentoPesquisa(p));
         let placa1Busca = normalizarPlaca(p.VEICULO_1_PLACA);
         let placa2Busca = normalizarPlaca(p.VEICULO_2_PLACA);
+        let placasListaBusca = Array.isArray(p.VEICULOS_LISTA)
+            ? p.VEICULOS_LISTA.map(v => normalizarPlaca(v)).join(" ")
+            : "";
         let chavePixBusca = normalizar(String(p.CHAVE_PIX || ""));
         let chavePixNumerica = String(p.CHAVE_PIX || "").replace(/\D/g, "");
         let localBusca = normalizar([
@@ -2037,7 +2040,7 @@ function pesquisar() {
             (tipoBusca === "nome" && nomeContemTermo(nomePrincipalBusca, termo)) ||
             (tipoBusca === "cpf" && termoCPF.length > 0 && cpfBusca.includes(termoCPF)) ||
             (tipoBusca === "documento" && (documentoBusca.includes(termo) || (termoCPF.length > 0 && documentoBuscaNumerico.includes(termoCPF)))) ||
-            (tipoBusca === "placa" && termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca))) ||
+            (tipoBusca === "placa" && termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placasListaBusca.includes(termoPlaca))) ||
             (tipoBusca === "local" && localBusca.includes(termo)) ||
             (tipoBusca === "pix" && ((chavePixBusca && chavePixBusca.includes(termo)) || (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF))));
 
@@ -2046,12 +2049,12 @@ function pesquisar() {
             encontrou =
                 buscaGeral.includes(termo) ||
                 (termoCPF.length > 0 && (cpfBusca.includes(termoCPF) || documentoBuscaNumerico.includes(termoCPF))) ||
-                (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca))) ||
+                (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placasListaBusca.includes(termoPlaca))) ||
                 (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF));
         }
 
         if (!encontrou && tipoBusca === "placa" && termoPlaca.length > 0) {
-            encontrou = placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || buscaGeral.includes(termoPlaca);
+            encontrou = placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placasListaBusca.includes(termoPlaca) || buscaGeral.includes(termoPlaca);
         }
 
         if (tipoBusca === "nome" && termo.length < 2) {
@@ -2060,7 +2063,7 @@ function pesquisar() {
 
         if (encontrou) {
             resultados.pessoa.push(p);
-            if (p.VEICULO_1_PLACA || p.VEICULO_2_PLACA) {
+            if (p.VEICULO_1_PLACA || p.VEICULO_2_PLACA || (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0)) {
                 resultados.veiculo.push(p);
             }
             if (String(p.CHAVE_PIX || "").trim() !== "") {
