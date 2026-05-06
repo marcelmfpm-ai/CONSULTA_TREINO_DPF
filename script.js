@@ -2084,7 +2084,10 @@ function pesquisar() {
         atualizarResumoResultados(0);
     } else {
         const cntPessoa = resultados.pessoa.length;
-        const cntVeiculo = resultados.veiculo.length;
+        const cntVeiculo = resultados.veiculo.reduce(function(acc, p) {
+            var n = (p.VEICULO_1_PLACA ? 1 : 0) + (p.VEICULO_2_PLACA ? 1 : 0) + (Array.isArray(p.VEICULOS_LISTA) ? p.VEICULOS_LISTA.length : 0);
+            return acc + (n > 0 ? n : 0);
+        }, 0);
         const cntPix = resultados.pix.length;
         const cntBoletim = resultados.boletim.length;
         const cntArma = resultados.arma.length;
@@ -2184,6 +2187,24 @@ function pesquisar() {
                             </div>
                         </div>
                     `;
+                }
+                if (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0) {
+                    p.VEICULOS_LISTA.forEach(function(vEntry) {
+                        const partes = vEntry.split(" - ");
+                        const identificador = partes[0] ? partes[0].trim() : vEntry;
+                        const tipo = partes[1] ? partes[1].trim() : "particular";
+                        html += `
+                            <div class="card-resultado" onclick="abrirDetalhe(${indexGlobal}, 'veiculos')"${obterEstiloCard(p)}>
+                                <div class="card-titulo">${identificador}</div>
+                                <div class="card-info">
+                                    <div><strong>Placa:</strong> ${identificador}</div>
+                                    <div><strong>Tipo:</strong> ${tipo}</div>
+                                    <div><strong>Proprietário:</strong> ${obterNomePessoa(p) || ""}</div>
+                                    <div><strong>Investigação:</strong> <span class="banco-dados">BANCO DE DADOS VEICULAR</span> <span class="origem">Origem: ${p.BASE_FICTICIA_VEICULO || p.BASE_FICTICIA || ""}</span></div>
+                                </div>
+                            </div>
+                        `;
+                    });
                 }
             });
             html += `</div>`;
