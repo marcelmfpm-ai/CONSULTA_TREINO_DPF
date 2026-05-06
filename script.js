@@ -2085,7 +2085,12 @@ function pesquisar() {
     } else {
         const cntPessoa = resultados.pessoa.length;
         const cntVeiculo = resultados.veiculo.reduce(function(acc, p) {
-            var n = (p.VEICULO_1_PLACA ? 1 : 0) + (p.VEICULO_2_PLACA ? 1 : 0) + (Array.isArray(p.VEICULOS_LISTA) ? p.VEICULOS_LISTA.length : 0);
+            var listaLen = Array.isArray(p.VEICULOS_LISTA)
+                ? ((tipoBusca === "placa" && termoPlaca.length > 0)
+                    ? p.VEICULOS_LISTA.filter(function(v) { return normalizarPlaca(v).indexOf(termoPlaca) !== -1; }).length
+                    : p.VEICULOS_LISTA.length)
+                : 0;
+            var n = (p.VEICULO_1_PLACA ? 1 : 0) + (p.VEICULO_2_PLACA ? 1 : 0) + listaLen;
             return acc + (n > 0 ? n : 0);
         }, 0);
         const cntPix = resultados.pix.length;
@@ -2189,7 +2194,10 @@ function pesquisar() {
                     `;
                 }
                 if (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0) {
-                    p.VEICULOS_LISTA.forEach(function(vEntry) {
+                    const listaFiltrada = (tipoBusca === "placa" && termoPlaca.length > 0)
+                        ? p.VEICULOS_LISTA.filter(function(v) { return normalizarPlaca(v).indexOf(termoPlaca) !== -1; })
+                        : p.VEICULOS_LISTA;
+                    listaFiltrada.forEach(function(vEntry) {
                         const partes = vEntry.split(" - ");
                         const identificador = partes[0] ? partes[0].trim() : vEntry;
                         const tipo = partes[1] ? partes[1].trim() : "particular";
