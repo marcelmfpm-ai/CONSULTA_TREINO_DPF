@@ -567,9 +567,16 @@ const REGISTROS_FIXOS = [
             "(Equipe Amarela) Kit 10, Cidade Cenográfica/ANP",
             "(Equipe Azul Escuro) Kit 13, Cidade Cenográfica/ANP"
         ],
+        VEICULOS_LISTA: [
+            "(Equipe Vermelha) VEM0A01 - particular",
+            "(Equipe Azul Clara) AZC0A02 - particular",
+            "(Equipe Verde) VER0A03 - particular",
+            "(Equipe Amarela) AMA0A04 - particular",
+            "(Equipe Azul Escuro) AZE0A05 - particular"
+        ],
         BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
-        BASE_FICTICIA_VEICULO: "",
+        BASE_FICTICIA_VEICULO: "Base Interna - Consulta Veiculo (Simulacao)",
         ORIGEM_REGISTRO: "FIXO"
     },
     {
@@ -1633,7 +1640,9 @@ function montarPainelConsultaPorCpf(registros) {
     registros.forEach(pessoa => {
         const indexGlobal = dados.indexOf(pessoa);
         const nome = obterNomePessoa(pessoa) || "Registro";
-        const quantidadeVeiculos = [pessoa.VEICULO_1_PLACA, pessoa.VEICULO_2_PLACA].filter(Boolean).length;
+        const quantidadeVeiculos = Array.isArray(pessoa.VEICULOS_LISTA) && pessoa.VEICULOS_LISTA.length > 0
+            ? pessoa.VEICULOS_LISTA.length
+            : [pessoa.VEICULO_1_PLACA, pessoa.VEICULO_2_PLACA].filter(Boolean).length;
         const quantidadeVoos = Array.isArray(pessoa.VOOS) ? pessoa.VOOS.length : 0;
         const quantidadeBoletins = Array.isArray(pessoa.BOLETINS) ? pessoa.BOLETINS.length : 0;
         const linhasPessoais = montarLinhasPessoaisResumo(pessoa);
@@ -2413,6 +2422,12 @@ function gerarSecaoDadosPessoais(pessoa) {
 }
 
 function gerarSecaoVeiculos(pessoa, veiculo = null) {
+    if (Array.isArray(pessoa.VEICULOS_LISTA) && pessoa.VEICULOS_LISTA.length > 0 && !veiculo) {
+        return montarSecaoDetalhe("Veículos",
+            pessoa.VEICULOS_LISTA.map((v, i) => `<div class="detalhe-campo"><strong>Veículo ${i + 1}:</strong> ${v}</div>`).join("")
+        );
+    }
+
     const veiculos = obterVeiculosPessoa(pessoa, veiculo);
 
     if (veiculos.length === 0) {
