@@ -710,6 +710,57 @@ const REGISTROS_FIXOS = [
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
         BASE_FICTICIA_VEICULO: "",
         ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Nélio Pataxó Barbosa",
+        CPF_FICTICIO: "013.442.885-71",
+        ANTECEDENTES: [
+            {
+                PROCESSO: "5002829-40.2018.4.03.6112",
+                VARA: "1 Vara Federal de Brasília",
+                NATUREZA: "Tráfico Internacional de Drogas",
+                CONDENACAO: "5 anos",
+                SITUACAO: "Condenado"
+            }
+        ],
+        DATA_NASCIMENTO: "12/03/1985",
+        ESTADO_CIVIL: "Casado",
+        NOME_MAE: "Maria Pataxó da Costa",
+        NOME_PAI: "Lindovaldo Barbosa",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        NATURALIDADE: "Brasília",
+        UF_NATURALIDADE: "DF",
+        GENERO: "Masculino",
+        DATA_INSCRICAO_CPF: "14/03/2003",
+        ESTRANGEIRO: "Não",
+        PROFISSAO: "Motorista de aplicativo / Pintor / Pedreiro",
+        INVESTIGACOES: "Nenhum registro",
+        RESIDENTE_EXTERIOR: "Não",
+        SOCIO_EMPRESA: "-",
+        LOGRADOURO: "Rua Sria II, QE 40",
+        NUMERO: "",
+        COMPLEMENTO: "",
+        BAIRRO: "Guará",
+        CIDADE: "Brasília",
+        UF: "DF",
+        CEP: "71000-000",
+        TELEFONE_1: "(61) 9 8423-7712",
+        TELEFONE_1_TIPO: "Celular",
+        RG_NUMERO: "2654891-4",
+        RG_ORGAO_EMISSOR: "SSP/DF",
+        CONJUGE: "Tina Russo",
+        FILHOS: "Dois (3 e 5 anos)",
+        RENDA_FAMILIAR: "Aproximadamente R$ 3.000,00",
+        TITULO_ELEITOR: "0542 1836 0021",
+        ZONA_ELEITORAL: "012",
+        SECAO_ELEITORAL: "0823",
+        CNH: "01987455302",
+        CNH_CATEGORIA: "B",
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
     }
 ];
 const CAMPOS_MINIMOS_BASE = [
@@ -2010,7 +2061,8 @@ function pesquisar() {
         veiculo: [],
         pix: [],
         boletim: [],
-        arma: []
+        arma: [],
+        antecedentes: []
     };
 
     dados.forEach(p => {
@@ -2074,12 +2126,17 @@ function pesquisar() {
                     resultados.boletim.push({ pessoa: p, boletim: boletim });
                 });
             }
+            if (Array.isArray(p.ANTECEDENTES) && p.ANTECEDENTES.length > 0) {
+                p.ANTECEDENTES.forEach(ant => {
+                    resultados.antecedentes.push({ pessoa: p, antecedente: ant });
+                });
+            }
         }
     });
 
     let html = ``;
 
-    if (resultados.pessoa.length === 0 && resultados.veiculo.length === 0 && resultados.pix.length === 0 && resultados.boletim.length === 0 && resultados.arma.length === 0) {
+    if (resultados.pessoa.length === 0 && resultados.veiculo.length === 0 && resultados.pix.length === 0 && resultados.boletim.length === 0 && resultados.arma.length === 0 && resultados.antecedentes.length === 0) {
         html = `<div class="resultado">Nenhum resultado encontrado.</div>`;
         atualizarResumoResultados(0);
     } else {
@@ -2096,7 +2153,8 @@ function pesquisar() {
         const cntPix = resultados.pix.length;
         const cntBoletim = resultados.boletim.length;
         const cntArma = resultados.arma.length;
-        const totalEncontrados = cntPessoa + cntVeiculo + cntPix + cntBoletim + cntArma;
+        const cntAntecedentes = resultados.antecedentes.length;
+        const totalEncontrados = cntPessoa + cntVeiculo + cntPix + cntBoletim + cntArma + cntAntecedentes;
         const exibirPainelCpf = (tipoBusca === "cpf" || tipoBusca === "nome") && cntPessoa > 0;
         const abaInicial = (tipoBusca === "placa" && cntVeiculo > 0)
             ? "veiculo"
@@ -2106,7 +2164,7 @@ function pesquisar() {
                     ? "veiculo"
                     : (cntPix > 0
                         ? "pix"
-                        : (cntBoletim > 0 ? "boletim" : "arma"))));
+                        : (cntBoletim > 0 ? "boletim" : (cntAntecedentes > 0 ? "antecedentes" : "arma")))));
 
         if (exibirPainelCpf) {
             html += montarPainelConsultaPorCpf(resultados.pessoa);
@@ -2119,6 +2177,7 @@ function pesquisar() {
                 <button class="aba-btn ${abaInicial === "pix" ? "aba-ativo" : ""}" onclick="filtrarResultados('pix', this)">Consulta PIX (${cntPix})</button>
                 <button class="aba-btn ${abaInicial === "boletim" ? "aba-ativo" : ""}" onclick="filtrarResultados('boletim', this)">BOLETIM OCORRENCIA (${cntBoletim})</button>
                 <button class="aba-btn ${abaInicial === "arma" ? "aba-ativo" : ""}" onclick="filtrarResultados('arma', this)">Arma (${cntArma})</button>
+                <button class="aba-btn ${abaInicial === "antecedentes" ? "aba-ativo" : ""}" onclick="filtrarResultados('antecedentes', this)">Antecedentes Criminais (${cntAntecedentes})</button>
             </div>
             <div id="abas-conteudo">
         `;
@@ -2270,6 +2329,31 @@ function pesquisar() {
             html += `<div class="tipo-resultado" id="tipo-arma" style="${abaInicial === "arma" ? "" : "display:none;"}"><div class="resultado">Nenhuma arma relacionada encontrada.</div></div>`;
         }
 
+        html += `<div class="tipo-resultado" id="tipo-antecedentes" style="${abaInicial === "antecedentes" ? "" : "display:none;"}">`;
+        if (cntAntecedentes > 0) {
+            resultados.antecedentes.forEach(item => {
+                const pessoa = item.pessoa || {};
+                const ant = item.antecedente || {};
+                const indexGlobal = dados.indexOf(pessoa);
+                html += `
+                    <div class="card-resultado" onclick="abrirDetalhe(${indexGlobal}, 'antecedentes')"${obterEstiloCard(pessoa)}>
+                        <div class="card-titulo">ANTECEDENTES CRIMINAIS - ${pessoa.NOME_COMPLETO || ""}</div>
+                        <div class="card-info">
+                            <div><strong>Processo:</strong> ${ant.PROCESSO || ""}</div>
+                            <div><strong>Vara:</strong> ${ant.VARA || ""}</div>
+                            <div><strong>Natureza:</strong> ${ant.NATUREZA || ""}</div>
+                            <div><strong>Condenação:</strong> ${ant.CONDENACAO || ""}</div>
+                            <div><strong>Situação:</strong> ${ant.SITUACAO || ""}</div>
+                            <div><strong>Envolvido:</strong> ${pessoa.NOME_COMPLETO || ""} - CPF ${pessoa.CPF_FICTICIO || ""}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            html += `<div class="resultado">Nenhum antecedente criminal encontrado.</div>`;
+        }
+        html += `</div>`;
+
         html += `</div>`;
         atualizarResumoResultados(totalEncontrados);
     }
@@ -2305,6 +2389,11 @@ function filtrarResultados(tipo, botao = null) {
         const tipoArma = document.getElementById("tipo-arma");
         if (tipoArma) {
             tipoArma.style.display = "block";
+        }
+    } else if (tipo === "antecedentes") {
+        const tipoAnt = document.getElementById("tipo-antecedentes");
+        if (tipoAnt) {
+            tipoAnt.style.display = "block";
         }
     }
 
@@ -2449,6 +2538,8 @@ function gerarSecaoDadosPessoais(pessoa) {
             ? pessoa.ENDERECOS.map((end, i) => `<div class="detalhe-campo"><strong>Endereço ${i + 1}:</strong> ${end}</div>`).join("")
             : `<div class="detalhe-campo"><strong>Endereço:</strong> ${enderecoPrincipalPessoa || "-"}</div>
         <div class="detalhe-campo"><strong>Endereço 2:</strong> ${enderecoSecundarioPessoa || "-"}</div>`}
+        ${pessoa.TELEFONE_1 ? `<div class="detalhe-campo"><strong>Telefone:</strong> ${pessoa.TELEFONE_1}${pessoa.TELEFONE_1_TIPO ? " (" + pessoa.TELEFONE_1_TIPO + ")" : ""}</div>` : ""}
+        ${pessoa.TELEFONE_2 ? `<div class="detalhe-campo"><strong>Telefone 2:</strong> ${pessoa.TELEFONE_2}${pessoa.TELEFONE_2_TIPO ? " (" + pessoa.TELEFONE_2_TIPO + ")" : ""}</div>` : ""}
         <div class="detalhe-campo"><strong>Data da Atualização:</strong> ${dataAtualizacao}</div>
     `);
 }
@@ -2569,6 +2660,41 @@ function gerarSecaoBoletins(pessoa) {
     `);
 }
 
+function gerarSecaoDadosComplementares(pessoa) {
+    const campos = [
+        pessoa.CONJUGE        ? `<div class="detalhe-campo"><strong>Cônjuge:</strong> ${pessoa.CONJUGE}</div>` : "",
+        pessoa.FILHOS         ? `<div class="detalhe-campo"><strong>Filhos:</strong> ${pessoa.FILHOS}</div>` : "",
+        pessoa.RENDA_FAMILIAR ? `<div class="detalhe-campo"><strong>Renda Mensal Familiar:</strong> ${pessoa.RENDA_FAMILIAR}</div>` : "",
+        pessoa.TITULO_ELEITOR ? `<div class="detalhe-campo"><strong>Título de Eleitor:</strong> ${pessoa.TITULO_ELEITOR}</div>` : "",
+        pessoa.ZONA_ELEITORAL ? `<div class="detalhe-campo"><strong>Zona Eleitoral:</strong> ${pessoa.ZONA_ELEITORAL}</div>` : "",
+        pessoa.SECAO_ELEITORAL? `<div class="detalhe-campo"><strong>Seção Eleitoral:</strong> ${pessoa.SECAO_ELEITORAL}</div>` : "",
+        (pessoa.CNH || pessoa.CNH_CATEGORIA) ? `<div class="detalhe-campo"><strong>CNH:</strong> ${pessoa.CNH || "-"} – Categoria ${pessoa.CNH_CATEGORIA || "-"}</div>` : ""
+    ].filter(Boolean).join("");
+
+    if (!campos) return "";
+
+    return montarSecaoDetalhe("Dados Complementares", campos);
+}
+
+function gerarSecaoAntecedentes(pessoa) {
+    const antecedentes = Array.isArray(pessoa.ANTECEDENTES) ? pessoa.ANTECEDENTES : [];
+
+    if (antecedentes.length === 0) {
+        return montarSecaoDetalhe("Antecedentes Criminais", `<div class="detalhe-msg-vazia">Nenhum resultado encontrado.</div>`);
+    }
+
+    return montarSecaoDetalhe("Antecedentes Criminais", `
+        ${antecedentes.map(ant => `
+            <div class="detalhe-campo"><strong>Processo:</strong> ${ant.PROCESSO || "-"}</div>
+            <div class="detalhe-campo"><strong>Vara:</strong> ${ant.VARA || "-"}</div>
+            <div class="detalhe-campo"><strong>Natureza:</strong> ${ant.NATUREZA || "-"}</div>
+            <div class="detalhe-campo"><strong>Condenação:</strong> ${ant.CONDENACAO || "-"}</div>
+            <div class="detalhe-campo"><strong>Situação:</strong> ${ant.SITUACAO || "-"}</div>
+            <hr style="border:none; border-top:1px solid #d6dde8; margin:14px 0;">
+        `).join("")}
+    `);
+}
+
 function gerarSecaoArmas(pessoa) {
     const armas = Array.isArray(pessoa.ARMAS) ? pessoa.ARMAS : [];
 
@@ -2631,7 +2757,8 @@ function abrirDetalhe(index, tipo = "pessoa", veiculo = null) {
             voos: registroSelecionado.NOME_COMPLETO || "",
             pix: `CONSULTA PIX: ${registroSelecionado.CHAVE_PIX || registroSelecionado.NOME_COMPLETO || ""}`,
             boletim: `BOLETIM OCORRENCIA - ${registroSelecionado.NOME_COMPLETO || ""}`,
-            arma: registroSelecionado.NOME_COMPLETO || ""
+            arma: registroSelecionado.NOME_COMPLETO || "",
+            antecedentes: `ANTECEDENTES CRIMINAIS - ${registroSelecionado.NOME_COMPLETO || ""}`
         };
         const mapaOrigens = {
             pessoa: obterOrigemPessoa(registroSelecionado),
@@ -2639,7 +2766,8 @@ function abrirDetalhe(index, tipo = "pessoa", veiculo = null) {
             voos: "Base Interna - Consulta Voo (Simulacao)",
             pix: "CONSULTA PIX",
             boletim: obterOrigemPessoa(registroSelecionado),
-            arma: "BANCO DE DADOS ARMAS"
+            arma: "BANCO DE DADOS ARMAS",
+            antecedentes: "ANTECEDENTES CRIMINAIS"
         };
 
         const investigacaoTexto = registroSelecionado.INVESTIGACOES || "Nenhum caso";
@@ -2709,6 +2837,16 @@ function gerarSecoes() {
         html += gerarSecaoBoletins(p);
     } else if (tipoSelecionado === "arma") {
         html += gerarSecaoArmas(p);
+    } else if (tipoSelecionado === "antecedentes") {
+        html += gerarSecaoAntecedentes(p);
+    }
+
+    if (tipoSelecionado === "pessoa") {
+        html += gerarSecaoDadosComplementares(p);
+    }
+
+    if (tipoSelecionado === "pessoa" && Array.isArray(p.ANTECEDENTES) && p.ANTECEDENTES.length > 0) {
+        html += gerarSecaoAntecedentes(p);
     }
 
     document.getElementById("det-conteudo-secoes").innerHTML = html;
