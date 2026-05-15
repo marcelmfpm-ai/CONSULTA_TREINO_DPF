@@ -761,6 +761,77 @@ const REGISTROS_FIXOS = [
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
         BASE_FICTICIA_VEICULO: "",
         ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Sidnei Miler",
+        VULGO: "Mestre dos Cigarros",
+        CPF_FICTICIO: "029.746.489-52",
+        DATA_NASCIMENTO: "16/07/1980",
+        ESTADO_CIVIL: "Solteiro",
+        NOME_MAE: "Diana Uni Miler",
+        NOME_PAI: "Presto Miler",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        NATURALIDADE: "Rio de Janeiro",
+        UF_NATURALIDADE: "RJ",
+        GENERO: "Masculino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        SOCIO_EMPRESA: "-",
+        CIDADE: "Rio de Janeiro",
+        UF: "RJ",
+        VEICULO_1_PLACA: "SEF5S31",
+        VEICULO_1_MARCA: "Ford",
+        VEICULO_1_MODELO: "Ranger",
+        VEICULO_1_ANO: "2024",
+        VEICULO_1_ANO_FABRICACAO: "2024",
+        VEICULO_1_COR: "-",
+        VEICULO_1_CHASSI: "98867512RNKK88439",
+        VEICULO_1_RENAVAM_FICTICIO: "",
+        VEICULO_1_TIPO_PESSOA: "proprietario",
+        ANTECEDENTES: [
+            {
+                TIPO: "IPL",
+                NUMERO: "IPL 2023.0057200 - DPF/PDE/SP",
+                DATA: "31/05/2023",
+                MUNICIPIO: "Presidente Prudente",
+                UF_CASO: "SP",
+                RESUMO: "Preso em flagrante transportando cigarros",
+                ORIGEM: "EPOL - Caso"
+            },
+            {
+                TIPO: "IPL",
+                NUMERO: "IPL 2024.0045670 - DPF/NVI/MS",
+                DATA: "10/04/2024",
+                MUNICIPIO: "Naviraí",
+                UF_CASO: "MS",
+                RESUMO: "Preso em flagrante transportando cigarros",
+                ORIGEM: "EPOL - Caso"
+            },
+            {
+                TIPO: "IPL",
+                NUMERO: "IPL 2025.0033567 - DPF/MGA/PR",
+                DATA: "28/03/2025",
+                MUNICIPIO: "Maringá",
+                UF_CASO: "PR",
+                RESUMO: "Preso em flagrante transportando cigarros",
+                ORIGEM: "EPOL - Caso"
+            },
+            {
+                TIPO: "PROCESSO",
+                PROCESSO: "5003804-86.2025.4.03.6112",
+                VARA: "1 Vara Federal de Presidente Prudente/SP",
+                DATA: "10/12/2025",
+                NATUREZA: "Transporte ilegal de cigarros",
+                CONDENACAO: "3 anos (convertida em medidas restritivas de direito)",
+                SITUACAO: "Condenado",
+                INVESTIGACAO: "IPL 2023.0057200 - DPF/PDE/SP"
+            }
+        ],
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "Base Interna - Consulta Veiculo (Simulacao)",
+        ORIGEM_REGISTRO: "FIXO"
     }
 ];
 const CAMPOS_MINIMOS_BASE = [
@@ -2433,7 +2504,8 @@ function obterVeiculosPessoa(pessoa, veiculo = null) {
             modelo: pessoa.VEICULO_1_MODELO || "-",
             ano: pessoa.VEICULO_1_ANO || "-",
             cor: pessoa.VEICULO_1_COR || "-",
-            renavam: pessoa.VEICULO_1_RENAVAM_FICTICIO || "-"
+            renavam: pessoa.VEICULO_1_RENAVAM_FICTICIO || "-",
+            chassi: pessoa.VEICULO_1_CHASSI || ""
         });
     }
 
@@ -2444,7 +2516,8 @@ function obterVeiculosPessoa(pessoa, veiculo = null) {
             modelo: pessoa.VEICULO_2_MODELO || "-",
             ano: pessoa.VEICULO_2_ANO || "-",
             cor: pessoa.VEICULO_2_COR || "-",
-            renavam: pessoa.VEICULO_2_RENAVAM_FICTICIO || "-"
+            renavam: pessoa.VEICULO_2_RENAVAM_FICTICIO || "-",
+            chassi: pessoa.VEICULO_2_CHASSI || ""
         });
     }
 
@@ -2525,6 +2598,7 @@ function gerarSecaoDadosPessoais(pessoa) {
 
     return montarSecaoDetalhe("Dados Pessoais", `
         <div class="detalhe-campo"><strong>Nome:</strong> ${pessoa.NOME_COMPLETO || ""}</div>
+        ${pessoa.VULGO ? `<div class="detalhe-campo"><strong>Vulgo:</strong> ${pessoa.VULGO}</div>` : ""}
         <div class="detalhe-campo"><strong>CPF:</strong> ${obterCPF(pessoa) || "-"}</div>
         <div class="detalhe-campo"><strong>RG:</strong> ${rgPessoa}</div>
         <div class="detalhe-campo"><strong>Data de Nascimento:</strong> ${pessoa.DATA_NASCIMENTO || "-"}</div>
@@ -2566,6 +2640,7 @@ function gerarSecaoVeiculos(pessoa, veiculo = null) {
                     <th style="font-size:24px;">Ano</th><th></th>
                     <th style="font-size:24px;">Cor</th><th></th>
                     <th style="font-size:24px;">RENAVAM</th><th></th>
+                    <th style="font-size:24px;">Chassi</th><th></th>
                 </tr>
             </thead>
             <tbody>
@@ -2576,6 +2651,7 @@ function gerarSecaoVeiculos(pessoa, veiculo = null) {
                         <td>${item.ano || "-"}</td><td></td>
                         <td>${item.cor || "-"}</td><td></td>
                         <td>${item.renavam || "-"}</td><td></td>
+                        <td>${item.chassi || "-"}</td><td></td>
                     </tr>
                 `).join("")}
             </tbody>
@@ -2683,16 +2759,33 @@ function gerarSecaoAntecedentes(pessoa) {
         return montarSecaoDetalhe("Antecedentes Criminais", `<div class="detalhe-msg-vazia">Nenhum resultado encontrado.</div>`);
     }
 
-    return montarSecaoDetalhe("Antecedentes Criminais", `
-        ${antecedentes.map(ant => `
+    const linhas = antecedentes.map(ant => {
+        const tipo = ant.TIPO || "PROCESSO";
+        if (tipo === "IPL") {
+            return `
+                <div class="detalhe-campo"><strong>Tipo:</strong> Inquérito Policial (IPL)</div>
+                <div class="detalhe-campo"><strong>Número:</strong> ${ant.NUMERO || "-"}</div>
+                <div class="detalhe-campo"><strong>Data:</strong> ${ant.DATA || "-"}</div>
+                <div class="detalhe-campo"><strong>Município/UF:</strong> ${ant.MUNICIPIO || "-"}/${ant.UF_CASO || "-"}</div>
+                <div class="detalhe-campo"><strong>Resumo:</strong> ${ant.RESUMO || "-"}</div>
+                <div class="detalhe-campo"><strong>Origem:</strong> ${ant.ORIGEM || "-"}</div>
+                <hr style="border:none; border-top:1px solid #d6dde8; margin:14px 0;">
+            `;
+        }
+        return `
+            <div class="detalhe-campo"><strong>Tipo:</strong> Processo Judicial</div>
             <div class="detalhe-campo"><strong>Processo:</strong> ${ant.PROCESSO || "-"}</div>
             <div class="detalhe-campo"><strong>Vara:</strong> ${ant.VARA || "-"}</div>
+            <div class="detalhe-campo"><strong>Data:</strong> ${ant.DATA || "-"}</div>
             <div class="detalhe-campo"><strong>Natureza:</strong> ${ant.NATUREZA || "-"}</div>
             <div class="detalhe-campo"><strong>Condenação:</strong> ${ant.CONDENACAO || "-"}</div>
             <div class="detalhe-campo"><strong>Situação:</strong> ${ant.SITUACAO || "-"}</div>
+            ${ant.INVESTIGACAO ? `<div class="detalhe-campo"><strong>Investigação vinculada:</strong> ${ant.INVESTIGACAO}</div>` : ""}
             <hr style="border:none; border-top:1px solid #d6dde8; margin:14px 0;">
-        `).join("")}
-    `);
+        `;
+    }).join("");
+
+    return montarSecaoDetalhe("Antecedentes Criminais", linhas);
 }
 
 function gerarSecaoArmas(pessoa) {
