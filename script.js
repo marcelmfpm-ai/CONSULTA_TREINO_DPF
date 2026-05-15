@@ -2406,15 +2406,16 @@ function pesquisar() {
                 const pessoa = item.pessoa || {};
                 const ant = item.antecedente || {};
                 const indexGlobal = dados.indexOf(pessoa);
+                const isIPL = (ant.TIPO || "PROCESSO") === "IPL";
                 html += `
                     <div class="card-resultado" onclick="abrirDetalhe(${indexGlobal}, 'antecedentes')"${obterEstiloCard(pessoa)}>
                         <div class="card-titulo">ANTECEDENTES CRIMINAIS - ${pessoa.NOME_COMPLETO || ""}</div>
                         <div class="card-info">
-                            <div><strong>Processo:</strong> ${ant.PROCESSO || ""}</div>
-                            <div><strong>Vara:</strong> ${ant.VARA || ""}</div>
-                            <div><strong>Natureza:</strong> ${ant.NATUREZA || ""}</div>
-                            <div><strong>Condenação:</strong> ${ant.CONDENACAO || ""}</div>
-                            <div><strong>Situação:</strong> ${ant.SITUACAO || ""}</div>
+                            <div><strong>${isIPL ? "Inquérito:" : "Processo:"}</strong> ${isIPL ? (ant.NUMERO || "") : (ant.PROCESSO || "")}</div>
+                            ${!isIPL ? `<div><strong>Vara:</strong> ${ant.VARA || ""}</div>` : ""}
+                            <div><strong>Natureza:</strong> ${isIPL ? "Flagrante" : (ant.NATUREZA || "")}</div>
+                            ${!isIPL ? `<div><strong>Condenação:</strong> ${ant.CONDENACAO || ""}</div>` : ""}
+                            <div><strong>Situação:</strong> ${isIPL ? "Em andamento" : (ant.SITUACAO || "")}</div>
                             <div><strong>Envolvido:</strong> ${pessoa.NOME_COMPLETO || ""} - CPF ${pessoa.CPF_FICTICIO || ""}</div>
                         </div>
                     </div>
@@ -2764,9 +2765,11 @@ function gerarSecaoAntecedentes(pessoa) {
         if (tipo === "IPL") {
             return `
                 <div class="detalhe-campo"><strong>Tipo:</strong> Inquérito Policial (IPL)</div>
-                <div class="detalhe-campo"><strong>Número:</strong> ${ant.NUMERO || "-"}</div>
+                <div class="detalhe-campo"><strong>Inquérito:</strong> ${ant.NUMERO || "-"}</div>
                 <div class="detalhe-campo"><strong>Data:</strong> ${ant.DATA || "-"}</div>
                 <div class="detalhe-campo"><strong>Município/UF:</strong> ${ant.MUNICIPIO || "-"}/${ant.UF_CASO || "-"}</div>
+                <div class="detalhe-campo"><strong>Natureza:</strong> Flagrante</div>
+                <div class="detalhe-campo"><strong>Situação:</strong> Em andamento</div>
                 <div class="detalhe-campo"><strong>Resumo:</strong> ${ant.RESUMO || "-"}</div>
                 <div class="detalhe-campo"><strong>Origem:</strong> ${ant.ORIGEM || "-"}</div>
                 <hr style="border:none; border-top:1px solid #d6dde8; margin:14px 0;">
