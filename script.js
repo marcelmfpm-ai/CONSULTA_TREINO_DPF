@@ -504,6 +504,7 @@ const REGISTROS_FIXOS = [
         CPF_FICTICIO: "123.456.789-00",
         DATA_NASCIMENTO: "10/11/1982",
         NOME_MAE: "Vaneza da Mata",
+        NOME_PAI: "-",
         NATURALIDADE: "Maués",
         UF_NATURALIDADE: "AM",
         SITUACAO_CADASTRAL_CPF: "Regular",
@@ -512,20 +513,37 @@ const REGISTROS_FIXOS = [
         ESTRANGEIRO: "Não",
         RESIDENTE_EXTERIOR: "Não",
         SOCIO_EMPRESA: "98.765.432/0001-11",
+        LOGRADOURO: "R. Getúlio Vargas",
+        NUMERO: "157",
+        COMPLEMENTO: "",
+        BAIRRO: "Centro",
+        CIDADE: "Maués",
+        UF: "AM",
+        CEP: "",
+        TELEFONE_1: "(94) 90008-0009",
+        TELEFONE_1_TIPO: "Celular",
+        VEICULO_1_PLACA: "JRT1F23",
+        VEICULO_1_MARCA: "Honda",
+        VEICULO_1_MODELO: "CG 125 FAN KS",
+        VEICULO_1_ANO: "2008",
+        VEICULO_1_ANO_FABRICACAO: "2008",
+        VEICULO_1_COR: "Amarela",
+        VEICULO_1_RENAVAM_FICTICIO: "",
+        VEICULO_1_TIPO_PESSOA: "proprietario",
         BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
-        BASE_FICTICIA_VEICULO: "",
+        BASE_FICTICIA_VEICULO: "Base Interna - Consulta Veiculo (Simulacao)",
         ORIGEM_REGISTRO: "FIXO"
     },
     {
-        NOME_COMPLETO: "SERRARIA MADEIREIRA SÃO JORGE LTDA",
-        NOME_FANTASIA: "SERRARIA MADEIREIRA SÃO JORGE LTDA",
+        NOME_COMPLETO: "MADEIREIRA SÃO JORGE LTDA",
+        NOME_FANTASIA: "MADEIREIRA SÃO JORGE LTDA",
         TAGS: "BDRECEITACNPJ_RECEITACNPJ",
         CNPJ: "98.765.432/0001-11",
         CPF_CNPJ: "98.765.432/0001-11",
         DOCUMENTO: "98.765.432/0001-11",
         MATRIZ_FILIAL: "MATRIZ",
-        PJ_RAZAO_SOCIAL: "SERRARIA MADEIREIRA SÃO JORGE LTDA",
+        PJ_RAZAO_SOCIAL: "MADEIREIRA SÃO JORGE LTDA",
         ADMINISTRADOR_RESPONSAVEL: "Arnaldo Pereira da Mata",
         CPF_RESPONSAVEL: "123.456.789-00",
         LOGRADOURO: "Estrada Vicinal do Guamá, km 10",
@@ -535,10 +553,16 @@ const REGISTROS_FIXOS = [
         CIDADE: "Altamira",
         UF: "PA",
         CEP: "",
+        TELEFONE_1: "(66) 95445-4554",
+        EMAIL_1: "saojorge@madeireira.com",
         SITUACAO_CADASTRAL: "ATIVA",
+        DATA_SITUACAO_CADASTRAL: "17/01/2022",
+        DATA_INICIO_ATIVIDADE: "17/01/2022",
         CAPITAL_SOCIAL: "R$ 50.000,00",
+        CONTADOR: "Joca Ukulei",
+        CPF_CONTADOR: "112.233.445-56",
         SOCIO_PJ: "-",
-        SOCIO_PF: "Arnaldo Pereira da Mata - CPF 123.456.789-00",
+        SOCIO_PF: "Arnaldo Pereira da Mata - CPF 123.456.789-00 (90%); Jorge Motto Serra - CPF 213.243.546-55 (10%)",
         SOCIO_EXT: "-",
         BASE_FICTICIA: "BDRECEITACNPJ_RECEITACNPJ",
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Juridica (Simulacao)",
@@ -836,6 +860,136 @@ const REGISTROS_FIXOS = [
         BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
         BASE_FICTICIA_VEICULO: "Base Interna - Consulta Veiculo (Simulacao)",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "Jorge Motto Serra",
+        CPF_FICTICIO: "213.243.546-55",
+        DATA_NASCIMENTO: "20/02/1984",
+        ESTADO_CIVIL: "",
+        NOME_MAE: "Cláudia Serra",
+        NOME_PAI: "Pedro Motto",
+        SITUACAO_CADASTRAL_CPF: "Regular",
+        ANO_OBITO: "-",
+        NATURALIDADE: "Sinop",
+        UF_NATURALIDADE: "MT",
+        GENERO: "Masculino",
+        ESTRANGEIRO: "Não",
+        RESIDENTE_EXTERIOR: "Não",
+        SOCIO_EMPRESA: "45.789.312/0001-90 (80%); 58.214.907/0001-42 (85%); 98.765.432/0001-11 (10%)",
+        LOGRADOURO: "Rua das Oliveiras",
+        NUMERO: "450",
+        COMPLEMENTO: "",
+        BAIRRO: "Jardim Itália",
+        CIDADE: "Sinop",
+        UF: "MT",
+        CEP: "78550-000",
+        TELEFONE_1: "+55 66 943211234",
+        TELEFONE_1_TIPO: "Celular",
+        EMAIL_1: "j.mottoserra@serra.com",
+        VEICULO_1_PLACA: "RMT9H87",
+        VEICULO_1_MARCA: "RAM",
+        VEICULO_1_MODELO: "3500 Limited",
+        VEICULO_1_ANO: "2026",
+        VEICULO_1_ANO_FABRICACAO: "2025",
+        VEICULO_1_COR: "Preta",
+        VEICULO_1_RENAVAM_FICTICIO: "",
+        VEICULO_1_TIPO_PESSOA: "proprietario",
+        VEICULO_2_PLACA: "HSW7D45",
+        VEICULO_2_MARCA: "Toyota",
+        VEICULO_2_MODELO: "Hilux SW4 Diamond",
+        VEICULO_2_ANO: "2023",
+        VEICULO_2_ANO_FABRICACAO: "2023",
+        VEICULO_2_COR: "Branca perolizada",
+        VEICULO_2_RENAVAM_FICTICIO: "",
+        VEICULO_2_TIPO_PESSOA: "proprietario",
+        VEICULO_3_PLACA: "SPG9F86",
+        VEICULO_3_MARCA: "Yamaha",
+        VEICULO_3_MODELO: "YBR 125",
+        VEICULO_3_ANO: "2015",
+        VEICULO_3_ANO_FABRICACAO: "2015",
+        VEICULO_3_COR: "Vermelha",
+        VEICULO_3_RENAVAM_FICTICIO: "03947261850",
+        VEICULO_3_TIPO_PESSOA: "proprietario",
+        VEICULO_4_PLACA: "HCJ0B77",
+        VEICULO_4_MARCA: "VW",
+        VEICULO_4_MODELO: "23.200",
+        VEICULO_4_ANO: "2015",
+        VEICULO_4_ANO_FABRICACAO: "2015",
+        VEICULO_4_COR: "Branca",
+        VEICULO_4_RENAVAM_FICTICIO: "07183649520",
+        VEICULO_4_TIPO_PESSOA: "proprietario",
+        BASE_FICTICIA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Fisica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "Base Interna - Consulta Veiculo (Simulacao)",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "MOTTO MOVÉIS LTDA",
+        NOME_FANTASIA: "MOTTO MOVÉIS",
+        TAGS: "BDRECEITACNPJ_RECEITACNPJ",
+        CNPJ: "45.789.312/0001-90",
+        CPF_CNPJ: "45.789.312/0001-90",
+        DOCUMENTO: "45.789.312/0001-90",
+        MATRIZ_FILIAL: "MATRIZ",
+        PJ_RAZAO_SOCIAL: "MOTTO MOVÉIS LTDA",
+        ADMINISTRADOR_RESPONSAVEL: "Jorge Motto Serra",
+        CPF_RESPONSAVEL: "213.243.546-55",
+        LOGRADOURO: "Rua das Acácias",
+        NUMERO: "980",
+        COMPLEMENTO: "",
+        BAIRRO: "Jardim Itália",
+        CIDADE: "Sinop",
+        UF: "MT",
+        CEP: "",
+        TELEFONE_1: "(66) 95445-4554",
+        EMAIL_1: "contato@mottomoveis.com.br",
+        SITUACAO_CADASTRAL: "ATIVA",
+        DATA_SITUACAO_CADASTRAL: "15/08/2015",
+        DATA_INICIO_ATIVIDADE: "15/08/2015",
+        CAPITAL_SOCIAL: "R$ 250.000,00",
+        CONTADOR: "Joca Ukulei",
+        CPF_CONTADOR: "112.233.445-56",
+        SOCIO_PJ: "-",
+        SOCIO_PF: "Jorge Motto Serra - CPF 213.243.546-55 (80%); André Correia Duarte (20%)",
+        SOCIO_EXT: "-",
+        BASE_FICTICIA: "BDRECEITACNPJ_RECEITACNPJ",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Juridica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "SERRANDO PESADO LTDA",
+        NOME_FANTASIA: "SERRANDO PESADO",
+        TAGS: "BDRECEITACNPJ_RECEITACNPJ",
+        CNPJ: "58.214.907/0001-42",
+        CPF_CNPJ: "58.214.907/0001-42",
+        DOCUMENTO: "58.214.907/0001-42",
+        MATRIZ_FILIAL: "MATRIZ",
+        PJ_RAZAO_SOCIAL: "SERRANDO PESADO LTDA",
+        ADMINISTRADOR_RESPONSAVEL: "Jorge Motto Serra",
+        CPF_RESPONSAVEL: "213.243.546-55",
+        LOGRADOURO: "Avenida dos Flamboyants",
+        NUMERO: "620",
+        COMPLEMENTO: "",
+        BAIRRO: "Setor Industrial Norte",
+        CIDADE: "Sinop",
+        UF: "MT",
+        CEP: "",
+        TELEFONE_1: "(66) 95445-4554",
+        EMAIL_1: "administrativo@serrando.com.br",
+        SITUACAO_CADASTRAL: "ATIVA",
+        DATA_SITUACAO_CADASTRAL: "15/08/2019",
+        DATA_INICIO_ATIVIDADE: "15/08/2019",
+        CAPITAL_SOCIAL: "R$ 2.300.000,00",
+        CONTADOR: "Joca Ukulei",
+        CPF_CONTADOR: "112.233.445-56",
+        SOCIO_PJ: "-",
+        SOCIO_PF: "Jorge Motto Serra - CPF 213.243.546-55 (85%); Carlos Eduardo Nogueira (15%)",
+        SOCIO_EXT: "-",
+        BASE_FICTICIA: "BDRECEITACNPJ_RECEITACNPJ",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Juridica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
         ORIGEM_REGISTRO: "FIXO"
     }
 ];
@@ -2148,6 +2302,8 @@ function pesquisar() {
         let documentoBuscaNumerico = normalizarCPF(obterDocumentoPesquisa(p));
         let placa1Busca = normalizarPlaca(p.VEICULO_1_PLACA);
         let placa2Busca = normalizarPlaca(p.VEICULO_2_PLACA);
+        let placa3Busca = normalizarPlaca(p.VEICULO_3_PLACA);
+        let placa4Busca = normalizarPlaca(p.VEICULO_4_PLACA);
         const placaNaLista = Array.isArray(p.VEICULOS_LISTA)
             ? function(termo) { return p.VEICULOS_LISTA.some(function(v) { return normalizarPlaca(v).indexOf(termo) !== -1; }); }
             : function() { return false; };
@@ -2168,7 +2324,7 @@ function pesquisar() {
             (tipoBusca === "nome" && nomeContemTermo(nomePrincipalBusca, termo)) ||
             (tipoBusca === "cpf" && termoCPF.length > 0 && cpfBusca.includes(termoCPF)) ||
             (tipoBusca === "documento" && (documentoBusca.includes(termo) || (termoCPF.length > 0 && documentoBuscaNumerico.includes(termoCPF)))) ||
-            (tipoBusca === "placa" && termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
+            (tipoBusca === "placa" && termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placa3Busca.includes(termoPlaca) || placa4Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
             (tipoBusca === "local" && localBusca.includes(termo)) ||
             (tipoBusca === "pix" && ((chavePixBusca && chavePixBusca.includes(termo)) || (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF))));
 
@@ -2177,12 +2333,12 @@ function pesquisar() {
             encontrou =
                 buscaGeral.includes(termo) ||
                 (termoCPF.length > 0 && (cpfBusca.includes(termoCPF) || documentoBuscaNumerico.includes(termoCPF))) ||
-                (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
+                (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placa3Busca.includes(termoPlaca) || placa4Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
                 (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF));
         }
 
         if (!encontrou && tipoBusca === "placa" && termoPlaca.length > 0) {
-            encontrou = placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placaNaLista(termoPlaca) || buscaGeral.includes(termoPlaca);
+            encontrou = placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placa3Busca.includes(termoPlaca) || placa4Busca.includes(termoPlaca) || placaNaLista(termoPlaca) || buscaGeral.includes(termoPlaca);
         }
 
         if (tipoBusca === "nome" && termo.length < 2) {
@@ -2191,7 +2347,7 @@ function pesquisar() {
 
         if (encontrou) {
             resultados.pessoa.push(p);
-            if (p.VEICULO_1_PLACA || p.VEICULO_2_PLACA || (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0)) {
+            if (p.VEICULO_1_PLACA || p.VEICULO_2_PLACA || p.VEICULO_3_PLACA || p.VEICULO_4_PLACA || (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0)) {
                 resultados.veiculo.push(p);
             }
             if (String(p.CHAVE_PIX || "").trim() !== "") {
@@ -2210,6 +2366,57 @@ function pesquisar() {
         }
     });
 
+    // Vinculação automática: adiciona empresas do pesquisado e sócios/responsáveis da empresa encontrada
+    if (resultados.pessoa.length > 0) {
+        const cpfsNumericos = new Set();
+        const cnpjsNumericos = new Set();
+        resultados.pessoa.forEach(function(p) {
+            var cpf = normalizarCPF(obterCPF(p));
+            if (cpf) cpfsNumericos.add(cpf);
+            if (p.CNPJ) { var cnpj = normalizarCPF(p.CNPJ); if (cnpj) cnpjsNumericos.add(cnpj); }
+        });
+
+        dados.forEach(function(p) {
+            if (resultados.pessoa.includes(p)) return;
+            var camposVinculo = normalizarCPF([
+                p.SOCIO_PF || "", p.SOCIO_EMPRESA || "", p.CPF_RESPONSAVEL || ""
+            ].join(" "));
+            var vinculado = false;
+            cpfsNumericos.forEach(function(cpf) { if (camposVinculo.includes(cpf)) vinculado = true; });
+            cnpjsNumericos.forEach(function(cnpj) { if (camposVinculo.includes(cnpj)) vinculado = true; });
+            if (!vinculado) {
+                var cpfP = normalizarCPF(obterCPF(p));
+                if (cpfP) {
+                    resultados.pessoa.forEach(function(found) {
+                        var camposFound = normalizarCPF([
+                            found.SOCIO_PF || "", found.SOCIO_EMPRESA || "", found.CPF_RESPONSAVEL || ""
+                        ].join(" "));
+                        if (camposFound.includes(cpfP)) vinculado = true;
+                    });
+                }
+            }
+            if (vinculado) {
+                resultados.pessoa.push(p);
+                if (p.VEICULO_1_PLACA || p.VEICULO_2_PLACA || (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0)) {
+                    resultados.veiculo.push(p);
+                }
+                if (String(p.CHAVE_PIX || "").trim() !== "") {
+                    resultados.pix.push(p);
+                }
+                if (Array.isArray(p.BOLETINS) && p.BOLETINS.length > 0) {
+                    p.BOLETINS.forEach(function(boletim) {
+                        resultados.boletim.push({ pessoa: p, boletim: boletim });
+                    });
+                }
+                if (Array.isArray(p.ANTECEDENTES) && p.ANTECEDENTES.length > 0) {
+                    p.ANTECEDENTES.forEach(function(ant) {
+                        resultados.antecedentes.push({ pessoa: p, antecedente: ant });
+                    });
+                }
+            }
+        });
+    }
+
     let html = ``;
 
     if (resultados.pessoa.length === 0 && resultados.veiculo.length === 0 && resultados.pix.length === 0 && resultados.boletim.length === 0 && resultados.arma.length === 0 && resultados.antecedentes.length === 0) {
@@ -2223,7 +2430,7 @@ function pesquisar() {
                     ? p.VEICULOS_LISTA.filter(function(v) { return normalizarPlaca(v).indexOf(termoPlaca) !== -1; }).length
                     : p.VEICULOS_LISTA.length)
                 : 0;
-            var n = (p.VEICULO_1_PLACA ? 1 : 0) + (p.VEICULO_2_PLACA ? 1 : 0) + listaLen;
+            var n = (p.VEICULO_1_PLACA ? 1 : 0) + (p.VEICULO_2_PLACA ? 1 : 0) + (p.VEICULO_3_PLACA ? 1 : 0) + (p.VEICULO_4_PLACA ? 1 : 0) + listaLen;
             return acc + (n > 0 ? n : 0);
         }, 0);
         const cntPix = resultados.pix.length;
@@ -2282,7 +2489,8 @@ function pesquisar() {
             html += `<div class="tipo-resultado" id="tipo-veiculo" style="${abaInicial === "veiculo" ? "" : "display:none;"}">`;
             resultados.veiculo.forEach((p, idx) => {
                 const indexGlobal = dados.indexOf(p);
-                if (p.VEICULO_1_PLACA) {
+                const exibirV1 = p.VEICULO_1_PLACA && (tipoBusca !== "placa" || !termoPlaca || normalizarPlaca(p.VEICULO_1_PLACA).includes(termoPlaca));
+                if (exibirV1) {
                     const veiculo1Data = {
                         marca: p.VEICULO_1_MARCA || "",
                         modelo: p.VEICULO_1_MODELO || "",
@@ -2305,7 +2513,8 @@ function pesquisar() {
                         </div>
                     `;
                 }
-                if (p.VEICULO_2_PLACA) {
+                const exibirV2 = p.VEICULO_2_PLACA && (tipoBusca !== "placa" || !termoPlaca || normalizarPlaca(p.VEICULO_2_PLACA).includes(termoPlaca));
+                if (exibirV2) {
                     const veiculo2Data = {
                         marca: p.VEICULO_2_MARCA || "",
                         modelo: p.VEICULO_2_MODELO || "",
@@ -2322,6 +2531,54 @@ function pesquisar() {
                                 <div><strong>Placa:</strong> ${p.VEICULO_2_PLACA || ""}</div>
                                 <div><strong>Ano:</strong> ${p.VEICULO_2_ANO || ""}</div>
                                 <div><strong>Cor:</strong> ${p.VEICULO_2_COR || ""}</div>
+                                <div><strong>Proprietário:</strong> ${obterNomePessoa(p) || ""}</div>
+                                <div><strong>Investigação:</strong> <span class="banco-dados">BANCO DE DADOS VEICULAR</span> <span class="origem">Origem: ${p.BASE_FICTICIA_VEICULO || p.BASE_FICTICIA || ""}</span></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                const exibirV3 = p.VEICULO_3_PLACA && (tipoBusca !== "placa" || !termoPlaca || normalizarPlaca(p.VEICULO_3_PLACA).includes(termoPlaca));
+                if (exibirV3) {
+                    const veiculo3Data = {
+                        marca: p.VEICULO_3_MARCA || "",
+                        modelo: p.VEICULO_3_MODELO || "",
+                        placa: p.VEICULO_3_PLACA || "",
+                        ano: p.VEICULO_3_ANO || "",
+                        cor: p.VEICULO_3_COR || "",
+                        renavam: p.VEICULO_3_RENAVAM_FICTICIO || "",
+                        numero: 3
+                    };
+                    html += `
+                        <div class="card-resultado" data-index="${indexGlobal}" data-veiculo="${encodeURIComponent(JSON.stringify(veiculo3Data))}"${obterEstiloCard(p)}>
+                            <div class="card-titulo">${p.VEICULO_3_MARCA} ${p.VEICULO_3_MODELO}</div>
+                            <div class="card-info">
+                                <div><strong>Placa:</strong> ${p.VEICULO_3_PLACA || ""}</div>
+                                <div><strong>Ano:</strong> ${p.VEICULO_3_ANO || ""}</div>
+                                <div><strong>Cor:</strong> ${p.VEICULO_3_COR || ""}</div>
+                                <div><strong>Proprietário:</strong> ${obterNomePessoa(p) || ""}</div>
+                                <div><strong>Investigação:</strong> <span class="banco-dados">BANCO DE DADOS VEICULAR</span> <span class="origem">Origem: ${p.BASE_FICTICIA_VEICULO || p.BASE_FICTICIA || ""}</span></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                const exibirV4 = p.VEICULO_4_PLACA && (tipoBusca !== "placa" || !termoPlaca || normalizarPlaca(p.VEICULO_4_PLACA).includes(termoPlaca));
+                if (exibirV4) {
+                    const veiculo4Data = {
+                        marca: p.VEICULO_4_MARCA || "",
+                        modelo: p.VEICULO_4_MODELO || "",
+                        placa: p.VEICULO_4_PLACA || "",
+                        ano: p.VEICULO_4_ANO || "",
+                        cor: p.VEICULO_4_COR || "",
+                        renavam: p.VEICULO_4_RENAVAM_FICTICIO || "",
+                        numero: 4
+                    };
+                    html += `
+                        <div class="card-resultado" data-index="${indexGlobal}" data-veiculo="${encodeURIComponent(JSON.stringify(veiculo4Data))}"${obterEstiloCard(p)}>
+                            <div class="card-titulo">${p.VEICULO_4_MARCA} ${p.VEICULO_4_MODELO}</div>
+                            <div class="card-info">
+                                <div><strong>Placa:</strong> ${p.VEICULO_4_PLACA || ""}</div>
+                                <div><strong>Ano:</strong> ${p.VEICULO_4_ANO || ""}</div>
+                                <div><strong>Cor:</strong> ${p.VEICULO_4_COR || ""}</div>
                                 <div><strong>Proprietário:</strong> ${obterNomePessoa(p) || ""}</div>
                                 <div><strong>Investigação:</strong> <span class="banco-dados">BANCO DE DADOS VEICULAR</span> <span class="origem">Origem: ${p.BASE_FICTICIA_VEICULO || p.BASE_FICTICIA || ""}</span></div>
                             </div>
@@ -2540,6 +2797,7 @@ function gerarSecaoDadosPessoais(pessoa) {
     const enderecoPrincipal = [
         pessoa.LOGRADOURO,
         pessoa.NUMERO,
+        pessoa.BAIRRO,
         pessoa.COMPLEMENTO ? `(${pessoa.COMPLEMENTO})` : "",
         pessoa.CIDADE,
         pessoa.UF ? `/${pessoa.UF}` : "",
