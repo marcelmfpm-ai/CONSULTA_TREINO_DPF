@@ -2369,11 +2369,12 @@ function pesquisar() {
         }
     });
 
-    // Vinculação automática: adiciona empresas do pesquisado e sócios/responsáveis da empresa encontrada
+    // Vinculação automática: adiciona empresas do pesquisado e sócios/responsáveis da empresa encontrada (apenas 1 nível)
     if (resultados.pessoa.length > 0) {
+        const resultadosIniciais = resultados.pessoa.slice();
         const cpfsNumericos = new Set();
         const cnpjsNumericos = new Set();
-        resultados.pessoa.forEach(function(p) {
+        resultadosIniciais.forEach(function(p) {
             var cpf = normalizarCPF(obterCPF(p));
             if (cpf) cpfsNumericos.add(cpf);
             if (p.CNPJ) { var cnpj = normalizarCPF(p.CNPJ); if (cnpj) cnpjsNumericos.add(cnpj); }
@@ -2390,7 +2391,7 @@ function pesquisar() {
             if (!vinculado) {
                 var cpfP = normalizarCPF(obterCPF(p));
                 if (cpfP) {
-                    resultados.pessoa.forEach(function(found) {
+                    resultadosIniciais.forEach(function(found) {
                         var camposFound = normalizarCPF([
                             found.SOCIO_PF || "", found.SOCIO_EMPRESA || "", found.CPF_RESPONSAVEL || ""
                         ].join(" "));
