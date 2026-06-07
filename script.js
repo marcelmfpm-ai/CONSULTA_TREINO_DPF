@@ -2975,8 +2975,10 @@ function gerarSecaoDadosPessoais(pessoa) {
             <div class="detalhe-campo"><strong>Administrador / Responsável:</strong> ${pessoa.ADMINISTRADOR_RESPONSAVEL || "-"}</div>
             <div class="detalhe-campo"><strong>CPF do Responsável:</strong> ${pessoa.CPF_RESPONSAVEL || "-"}</div>
             <div class="detalhe-campo"><strong>RG do Responsável:</strong> ${pessoa.RG_RESPONSAVEL || "-"}</div>
-            <div class="detalhe-campo"><strong>Endereço:</strong> ${enderecoPrincipal || "-"}</div>
-            <div class="detalhe-campo"><strong>Endereço 2:</strong> ${enderecoSecundario || "-"}</div>
+            ${Array.isArray(pessoa.ENDERECOS) && pessoa.ENDERECOS.length > 0
+                ? pessoa.ENDERECOS.map((end, i) => `<div class="detalhe-campo"><strong>Endereço ${i + 1}:</strong> ${end}</div>`).join("")
+                : `<div class="detalhe-campo"><strong>Endereço:</strong> ${enderecoPrincipal || "-"}</div>
+            <div class="detalhe-campo"><strong>Endereço 2:</strong> ${enderecoSecundario || "-"}</div>`}
             <div class="detalhe-campo"><strong>Telefone:</strong> ${pessoa.TELEFONE_1 || "-"}</div>
             <div class="detalhe-campo"><strong>Email:</strong> ${pessoa.EMAIL_1 || "-"}</div>
             <div class="detalhe-campo"><strong>Situação Cadastral:</strong> ${pessoa.SITUACAO_CADASTRAL || "-"}</div>
