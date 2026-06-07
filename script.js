@@ -1120,6 +1120,35 @@ const REGISTROS_FIXOS = [
         BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Juridica (Simulacao)",
         BASE_FICTICIA_VEICULO: "",
         ORIGEM_REGISTRO: "FIXO"
+    },
+    {
+        NOME_COMPLETO: "OSCORP",
+        NOME_FANTASIA: "OSCORP",
+        TAGS: "BDRECEITACNPJ_RECEITACNPJ",
+        CNPJ: "22.123.444/0001-32",
+        CPF_CNPJ: "22.123.444/0001-32",
+        DOCUMENTO: "22.123.444/0001-32",
+        MATRIZ_FILIAL: "MATRIZ",
+        PJ_RAZAO_SOCIAL: "OSCORP",
+        ADMINISTRADOR_RESPONSAVEL: "Carlão Osborn",
+        CPF_RESPONSAVEL: "789.012.345-67",
+        ENDERECOS: [
+            "(Equipe Amarela) Borracharia, Cidade Cenográfica/ANP",
+            "(Equipe Azul Escuro) Mercearia, Cidade Cenográfica/ANP",
+            "(Equipe Vermelha) Açaí, Cidade Cenográfica/ANP",
+            "(Equipe Azul Clara) Lanchonete, Cidade Cenográfica/ANP",
+            "(Equipe Verde) Correios, Cidade Cenográfica/ANP"
+        ],
+        SITUACAO_CADASTRAL: "ATIVA",
+        DATA_SITUACAO_CADASTRAL: "15/05/2019",
+        DATA_INICIO_ATIVIDADE: "15/05/2019",
+        SOCIO_PJ: "-",
+        SOCIO_PF: "Carlão Osborn - CPF 789.012.345-67",
+        SOCIO_EXT: "-",
+        BASE_FICTICIA: "BDRECEITACNPJ_RECEITACNPJ",
+        BASE_FICTICIA_PESSOA: "Base Interna - Consulta Pessoa Juridica (Simulacao)",
+        BASE_FICTICIA_VEICULO: "",
+        ORIGEM_REGISTRO: "FIXO"
     }
 ];
 const CAMPOS_MINIMOS_BASE = [
