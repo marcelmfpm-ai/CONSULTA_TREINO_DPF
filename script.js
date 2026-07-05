@@ -2491,9 +2491,12 @@ function pesquisar() {
             (tipoBusca === "pix" && ((chavePixBusca && chavePixBusca.includes(termo)) || (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF))));
 
         // Fallback geral para reduzir falso-negativo quando o termo eh classificado no tipo errado.
+        // Para documento/cpf, a busca deve ficar restrita aos campos de documento do proprio
+        // registro (evita casar com o CNPJ/CPF apenas citado no campo SOCIO_EMPRESA de terceiros).
         if (!encontrou && tipoBusca !== "nome" && tipoBusca !== "placa") {
+            const permiteBuscaGeral = tipoBusca !== "documento" && tipoBusca !== "cpf";
             encontrou =
-                buscaGeral.includes(termo) ||
+                (permiteBuscaGeral && buscaGeral.includes(termo)) ||
                 (termoCPF.length > 0 && (cpfBusca.includes(termoCPF) || documentoBuscaNumerico.includes(termoCPF))) ||
                 (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placa3Busca.includes(termoPlaca) || placa4Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
                 (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF));
@@ -2528,56 +2531,38 @@ function pesquisar() {
         }
     });
 
-    // Vinculação automática: adiciona empresas do pesquisado e sócios/responsáveis da empresa encontrada (apenas 1 nível)
-    if (resultados.pessoa.length > 0) {
-        const resultadosIniciais = resultados.pessoa.slice();
-        const cpfsNumericos = new Set();
-        const cnpjsNumericos = new Set();
-        resultadosIniciais.forEach(function(p) {
-            var cpf = normalizarCPF(obterCPF(p));
-            if (cpf) cpfsNumericos.add(cpf);
-            if (p.CNPJ) { var cnpj = normalizarCPF(p.CNPJ); if (cnpj) cnpjsNumericos.add(cnpj); }
+    // A busca retorna apenas os registros que efetivamente correspondem ao termo pesquisado
+    // (e o(s) veiculo(s) proprios desse registro). Explorar socios/empresas relacionadas deve
+    // ser feito com uma nova pesquisa a partir dos dados exibidos, sem expansao automatica —
+    // exceto ao pesquisar uma pessoa por nome/CPF, caso em que as pessoas juridicas das quais
+    // ela e socia/responsavel tambem sao retornadas (apenas 1 nivel, pessoa -> empresa).
+    if ((tipoBusca === "nome" || tipoBusca === "cpf") && resultados.pessoa.length > 0) {
+        const cpfsEncontrados = new Set();
+        resultados.pessoa.forEach(function(p) {
+            const cpf = normalizarCPF(obterCPF(p));
+            if (cpf) cpfsEncontrados.add(cpf);
         });
 
-        dados.forEach(function(p) {
-            if (resultados.pessoa.includes(p)) return;
-            var camposVinculo = normalizarCPF([
-                p.SOCIO_PF || "", p.SOCIO_EMPRESA || "", p.CPF_RESPONSAVEL || ""
-            ].join(" "));
-            var vinculado = false;
-            cpfsNumericos.forEach(function(cpf) { if (camposVinculo.includes(cpf)) vinculado = true; });
-            cnpjsNumericos.forEach(function(cnpj) { if (camposVinculo.includes(cnpj)) vinculado = true; });
-            if (!vinculado) {
-                var cpfP = normalizarCPF(obterCPF(p));
-                if (cpfP) {
-                    resultadosIniciais.forEach(function(found) {
-                        var camposFound = normalizarCPF([
-                            found.SOCIO_PF || "", found.SOCIO_EMPRESA || "", found.CPF_RESPONSAVEL || ""
-                        ].join(" "));
-                        if (camposFound.includes(cpfP)) vinculado = true;
-                    });
+        if (cpfsEncontrados.size > 0) {
+            dados.forEach(function(p) {
+                if (!p.CNPJ || resultados.pessoa.includes(p)) return;
+                const socioPF = normalizarCPF(p.SOCIO_PF || "");
+                const responsavel = normalizarCPF(p.CPF_RESPONSAVEL || "");
+                let vinculado = false;
+                cpfsEncontrados.forEach(function(cpf) {
+                    if (socioPF.includes(cpf) || responsavel.includes(cpf)) vinculado = true;
+                });
+                if (vinculado) {
+                    resultados.pessoa.push(p);
+                    if (p.VEICULO_1_PLACA || p.VEICULO_2_PLACA || p.VEICULO_3_PLACA || p.VEICULO_4_PLACA || (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0)) {
+                        resultados.veiculo.push(p);
+                    }
+                    if (String(p.CHAVE_PIX || "").trim() !== "") {
+                        resultados.pix.push(p);
+                    }
                 }
-            }
-            if (vinculado) {
-                resultados.pessoa.push(p);
-                if (p.VEICULO_1_PLACA || p.VEICULO_2_PLACA || (Array.isArray(p.VEICULOS_LISTA) && p.VEICULOS_LISTA.length > 0)) {
-                    resultados.veiculo.push(p);
-                }
-                if (String(p.CHAVE_PIX || "").trim() !== "") {
-                    resultados.pix.push(p);
-                }
-                if (Array.isArray(p.BOLETINS) && p.BOLETINS.length > 0) {
-                    p.BOLETINS.forEach(function(boletim) {
-                        resultados.boletim.push({ pessoa: p, boletim: boletim });
-                    });
-                }
-                if (Array.isArray(p.ANTECEDENTES) && p.ANTECEDENTES.length > 0) {
-                    p.ANTECEDENTES.forEach(function(ant) {
-                        resultados.antecedentes.push({ pessoa: p, antecedente: ant });
-                    });
-                }
-            }
-        });
+            });
+        }
     }
 
     let html = ``;
@@ -2944,6 +2929,30 @@ function obterVeiculosPessoa(pessoa, veiculo = null) {
             cor: pessoa.VEICULO_2_COR || "-",
             renavam: pessoa.VEICULO_2_RENAVAM_FICTICIO || "-",
             chassi: pessoa.VEICULO_2_CHASSI || ""
+        });
+    }
+
+    if (pessoa.VEICULO_3_PLACA) {
+        veiculos.push({
+            placa: pessoa.VEICULO_3_PLACA || "-",
+            marca: pessoa.VEICULO_3_MARCA || "-",
+            modelo: pessoa.VEICULO_3_MODELO || "-",
+            ano: pessoa.VEICULO_3_ANO || "-",
+            cor: pessoa.VEICULO_3_COR || "-",
+            renavam: pessoa.VEICULO_3_RENAVAM_FICTICIO || "-",
+            chassi: pessoa.VEICULO_3_CHASSI || ""
+        });
+    }
+
+    if (pessoa.VEICULO_4_PLACA) {
+        veiculos.push({
+            placa: pessoa.VEICULO_4_PLACA || "-",
+            marca: pessoa.VEICULO_4_MARCA || "-",
+            modelo: pessoa.VEICULO_4_MODELO || "-",
+            ano: pessoa.VEICULO_4_ANO || "-",
+            cor: pessoa.VEICULO_4_COR || "-",
+            renavam: pessoa.VEICULO_4_RENAVAM_FICTICIO || "-",
+            chassi: pessoa.VEICULO_4_CHASSI || ""
         });
     }
 
