@@ -821,6 +821,46 @@ const REGISTROS_FIXOS = [
         VEICULO_1_CHASSI: "98867512RNKK88439",
         VEICULO_1_RENAVAM_FICTICIO: "",
         VEICULO_1_TIPO_PESSOA: "proprietario",
+        VEICULO_2_PLACA: "PBH0B89",
+        VEICULO_2_MARCA: "Chevrolet",
+        VEICULO_2_MODELO: "Astra Sedan",
+        VEICULO_2_ANO: "2009",
+        VEICULO_2_COR: "Prata",
+        VEICULO_2_CHASSI: "9BGSL48F09B307164",
+        VEICULO_2_RENAVAM_FICTICIO: "00734891265",
+        VEICULO_2_TIPO_PESSOA: "proprietario",
+        VEICULO_3_PLACA: "PBH0B31",
+        VEICULO_3_MARCA: "Ford",
+        VEICULO_3_MODELO: "Focus",
+        VEICULO_3_ANO: "2013",
+        VEICULO_3_COR: "Preta",
+        VEICULO_3_CHASSI: "8AFTZ6FT8DJ182934",
+        VEICULO_3_RENAVAM_FICTICIO: "00891347562",
+        VEICULO_3_TIPO_PESSOA: "proprietario",
+        VEICULO_4_PLACA: "PAW4073",
+        VEICULO_4_MARCA: "Renault",
+        VEICULO_4_MODELO: "Logan",
+        VEICULO_4_ANO: "2016",
+        VEICULO_4_COR: "Prata",
+        VEICULO_4_CHASSI: "93YLSR8Y5GJ415827",
+        VEICULO_4_RENAVAM_FICTICIO: "00456729183",
+        VEICULO_4_TIPO_PESSOA: "proprietario",
+        VEICULO_5_PLACA: "PBH7A01",
+        VEICULO_5_MARCA: "Mitsubishi",
+        VEICULO_5_MODELO: "Pajero Dakar",
+        VEICULO_5_ANO: "2012",
+        VEICULO_5_COR: "Preta",
+        VEICULO_5_CHASSI: "93XZP2FS0CC248917",
+        VEICULO_5_RENAVAM_FICTICIO: "00612485379",
+        VEICULO_5_TIPO_PESSOA: "proprietario",
+        VEICULO_6_PLACA: "PBG9J01",
+        VEICULO_6_MARCA: "Mitsubishi",
+        VEICULO_6_MODELO: "Pajero Dakar",
+        VEICULO_6_ANO: "2013",
+        VEICULO_6_COR: "Preta",
+        VEICULO_6_CHASSI: "93XZP2FS4DC359128",
+        VEICULO_6_RENAVAM_FICTICIO: "00728356194",
+        VEICULO_6_TIPO_PESSOA: "proprietario",
         ANTECEDENTES: [
             {
                 TIPO: "IPL",
@@ -2956,6 +2996,30 @@ function obterVeiculosPessoa(pessoa, veiculo = null) {
         });
     }
 
+    if (pessoa.VEICULO_5_PLACA) {
+        veiculos.push({
+            placa: pessoa.VEICULO_5_PLACA || "-",
+            marca: pessoa.VEICULO_5_MARCA || "-",
+            modelo: pessoa.VEICULO_5_MODELO || "-",
+            ano: pessoa.VEICULO_5_ANO || "-",
+            cor: pessoa.VEICULO_5_COR || "-",
+            renavam: pessoa.VEICULO_5_RENAVAM_FICTICIO || "-",
+            chassi: pessoa.VEICULO_5_CHASSI || ""
+        });
+    }
+
+    if (pessoa.VEICULO_6_PLACA) {
+        veiculos.push({
+            placa: pessoa.VEICULO_6_PLACA || "-",
+            marca: pessoa.VEICULO_6_MARCA || "-",
+            modelo: pessoa.VEICULO_6_MODELO || "-",
+            ano: pessoa.VEICULO_6_ANO || "-",
+            cor: pessoa.VEICULO_6_COR || "-",
+            renavam: pessoa.VEICULO_6_RENAVAM_FICTICIO || "-",
+            chassi: pessoa.VEICULO_6_CHASSI || ""
+        });
+    }
+
     return veiculos;
 }
 
@@ -3057,19 +3121,14 @@ function gerarSecaoDadosPessoais(pessoa) {
 }
 
 function gerarSecaoVeiculos(pessoa, veiculo = null) {
-    if (Array.isArray(pessoa.VEICULOS_LISTA) && pessoa.VEICULOS_LISTA.length > 0 && !veiculo) {
-        return montarSecaoDetalhe("Veículos",
-            pessoa.VEICULOS_LISTA.map((v, i) => `<div class="detalhe-campo"><strong>Veículo ${i + 1}:</strong> ${v}</div>`).join("")
-        );
-    }
-
     const veiculos = obterVeiculosPessoa(pessoa, veiculo);
+    const listaExtra = (!veiculo && Array.isArray(pessoa.VEICULOS_LISTA)) ? pessoa.VEICULOS_LISTA : [];
 
-    if (veiculos.length === 0) {
+    if (veiculos.length === 0 && listaExtra.length === 0) {
         return montarSecaoDetalhe("Veículos", `<div class="detalhe-msg-vazia">Nenhum resultado encontrado.</div>`);
     }
 
-    return montarSecaoDetalhe("Veículos", `
+    const tabela = veiculos.length > 0 ? `
         <table class="detalhe-tabela" style="font-size:24px;">
             <thead>
                 <tr>
@@ -3094,7 +3153,13 @@ function gerarSecaoVeiculos(pessoa, veiculo = null) {
                 `).join("")}
             </tbody>
         </table>
-    `);
+    ` : "";
+
+    const lista = listaExtra.length > 0
+        ? listaExtra.map((v, i) => `<div class="detalhe-campo"><strong>Veículo ${veiculos.length + i + 1}:</strong> ${v}</div>`).join("")
+        : "";
+
+    return montarSecaoDetalhe("Veículos", tabela + lista);
 }
 
 function gerarSecaoVoos(pessoa) {

@@ -36,7 +36,7 @@ If loading fails partway, there's a cascading fallback (manual records only → 
 
 ### Record shape
 
-Records are flat objects keyed by field name (Portuguese, upper snake case), covering both pessoa física and pessoa jurídica in the same shape — e.g. `NOME_COMPLETO`, `CPF_FICTICIO`/`CNPJ`, `SOCIO_PF`/`SOCIO_EMPRESA`, `VEICULO_1_PLACA` through `VEICULO_4_*` (or a `VEICULOS_LISTA` array for records with more), `CHAVE_PIX`, `BOLETINS[]`, `ANTECEDENTES[]`, `ARMAS[]`. `isPessoaJuridica()`/`ehPessoaJuridica()` distinguish PF vs PJ by checking `CNPJ` normalizes to **exactly 14 digits** — a malformed CNPJ (wrong digit count) silently makes a company render with the pessoa-física detail template instead of "Dados Jurídicos". Always sanity-check digit count when editing a CNPJ.
+Records are flat objects keyed by field name (Portuguese, upper snake case), covering both pessoa física and pessoa jurídica in the same shape — e.g. `NOME_COMPLETO`, `CPF_FICTICIO`/`CNPJ`, `SOCIO_PF`/`SOCIO_EMPRESA`, `VEICULO_1_PLACA` through `VEICULO_6_*` (each slot also has `_MARCA`, `_MODELO`, `_ANO`, `_COR`, `_CHASSI`, `_RENAVAM_FICTICIO`, `_TIPO_PESSOA`; a `VEICULOS_LISTA` array of free-text strings still exists for any overflow beyond slot 6), `CHAVE_PIX`, `BOLETINS[]`, `ANTECEDENTES[]`, `ARMAS[]`. `isPessoaJuridica()`/`ehPessoaJuridica()` distinguish PF vs PJ by checking `CNPJ` normalizes to **exactly 14 digits** — a malformed CNPJ (wrong digit count) silently makes a company render with the pessoa-física detail template instead of "Dados Jurídicos". Always sanity-check digit count when editing a CNPJ.
 
 Vehicle-owner links, socio/company links, and administrator links are stored as plain text (`SOCIO_EMPRESA: "12.345.678/0001-90 (80%); ..."`, `SOCIO_PF: "Nome - CPF 123... (90%)"`) rather than as structured references — cross-referencing between people and companies is done by substring-matching normalized CPF/CNPJ digits out of these text fields (see `pesquisar()`).
 
@@ -49,7 +49,9 @@ Vehicle-owner links, socio/company links, and administrator links are stored as 
 
 ### Detail view (`abrirDetalhe()` → `gerarSecao*()` functions, script.js)
 
-Each `gerarSecao*(pessoa)` function renders one collapsible section (Dados Pessoais/Jurídicos, Veículos, Voos, PIX, Boletins, Antecedentes, Armas). `obterVeiculosPessoa()` must enumerate all of `VEICULO_1`..`VEICULO_4` (plus `VEICULOS_LISTA` overflow, handled separately) — historically this only covered slots 1–2, so if vehicles seem to be "missing" from a detail page, check this function first.
+Each `gerarSecao*(pessoa)` function renders one collapsible section (Dados Pessoais/Jurídicos, Veículos, Voos, PIX, Boletins, Antecedentes, Armas). `obterVeiculosPessoa()` must enumerate all of `VEICULO_1`..`VEICULO_6` — historically this only covered slots 1–2 (then 1–4), so if vehicles seem to be "missing" from a detail page, check this function first. `gerarSecaoVeiculos()` renders the structured `VEICULO_1`..`VEICULO_6` rows as a table *and then appends* any `VEICULOS_LISTA` entries below it as plain rows — it used to treat `VEICULOS_LISTA` as a full replacement for the table (hiding slots 1–6 entirely whenever any overflow entries existed), which is why that field should stay reserved for genuine overflow beyond slot 6, not as an alternate format for a handful of vehicles.
+
+**Note on the card-based search results tab** (the `pesquisar()` rendering block, script.js ~2650–2760): that code still only builds individual vehicle cards for slots 1–4 plus `VEICULOS_LISTA`, and has not been extended to slots 5–6. A person's 5th/6th vehicle will show correctly in their own detail page but won't get its own card in the "Veículos" search-results tab yet.
 
 ### Photos
 
