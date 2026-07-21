@@ -2451,6 +2451,7 @@ function pesquisar() {
     let contemNumeros = /\d/.test(termoOriginal);
     let placaValida = /^(?:[A-Z]{3}[0-9][A-Z0-9][0-9]{2}|[A-Z]{3}[0-9]{4})$/.test(termoPlaca);
     let pareceLocal = /\b(rua|avenida|av\.?|bairro|cidade|cep|logradouro|travessa|alameda|rodovia|km|quadra|lote)\b/i.test(termoOriginal);
+    let pareceEmail = termoOriginal.includes("@");
 
     let tipoBusca = modoSelecionado;
     if (modoSelecionado === "auto") {
@@ -2464,6 +2465,10 @@ function pesquisar() {
             tipoBusca = termoCPF.length === 14 ? "documento" : "cpf";
         } else if (contemLetras && contemNumeros) {
             tipoBusca = placaValida ? "placa" : "documento";
+        }
+
+        if (pareceEmail) {
+            tipoBusca = "email";
         }
 
         if (forcarLocal || pareceLocal) {
@@ -2511,6 +2516,7 @@ function pesquisar() {
             : function() { return false; };
         let chavePixBusca = normalizar(String(p.CHAVE_PIX || ""));
         let chavePixNumerica = String(p.CHAVE_PIX || "").replace(/\D/g, "");
+        let emailBusca = normalizar(String(p.EMAIL_1 || ""));
         let localBusca = normalizar([
             p.LOGRADOURO,
             p.NUMERO,
@@ -2528,6 +2534,7 @@ function pesquisar() {
             (tipoBusca === "documento" && (documentoBusca.includes(termo) || (termoCPF.length > 0 && documentoBuscaNumerico.includes(termoCPF)))) ||
             (tipoBusca === "placa" && termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placa3Busca.includes(termoPlaca) || placa4Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
             (tipoBusca === "local" && localBusca.includes(termo)) ||
+            (tipoBusca === "email" && emailBusca.length > 0 && emailBusca.includes(termo)) ||
             (tipoBusca === "pix" && ((chavePixBusca && chavePixBusca.includes(termo)) || (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF))));
 
         // Fallback geral para reduzir falso-negativo quando o termo eh classificado no tipo errado.
@@ -2535,11 +2542,15 @@ function pesquisar() {
         // registro (evita casar com o CNPJ/CPF apenas citado no campo SOCIO_EMPRESA de terceiros).
         if (!encontrou && tipoBusca !== "nome" && tipoBusca !== "placa") {
             const permiteBuscaGeral = tipoBusca !== "documento" && tipoBusca !== "cpf";
+            // Exige ao menos 4 digitos para considerar termoCPF um fragmento de documento
+            // deliberado - caso contrario um unico digito perdido (ex: email "foo9@x.com")
+            // bate por acidente contra o CPF de quase todo mundo na base.
+            const termoCPFRelevante = termoCPF.length >= 4;
             encontrou =
                 (permiteBuscaGeral && buscaGeral.includes(termo)) ||
-                (termoCPF.length > 0 && (cpfBusca.includes(termoCPF) || documentoBuscaNumerico.includes(termoCPF))) ||
+                (termoCPFRelevante && (cpfBusca.includes(termoCPF) || documentoBuscaNumerico.includes(termoCPF))) ||
                 (termoPlaca.length > 0 && (placa1Busca.includes(termoPlaca) || placa2Busca.includes(termoPlaca) || placa3Busca.includes(termoPlaca) || placa4Busca.includes(termoPlaca) || placaNaLista(termoPlaca))) ||
-                (termoCPF.length > 0 && chavePixNumerica.includes(termoCPF));
+                (termoCPFRelevante && chavePixNumerica.includes(termoCPF));
         }
 
         if (!encontrou && tipoBusca === "placa" && termoPlaca.length > 0) {
