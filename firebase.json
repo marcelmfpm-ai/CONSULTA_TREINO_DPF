@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "CLAUDE.md",
+      "crlv_ficticio_sidnei_miler.xlsx",
+      "pdf-anonimizado-1.pdf"
+    ]
+  }
+}
